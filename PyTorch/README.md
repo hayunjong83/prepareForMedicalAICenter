@@ -1,4 +1,3 @@
 - mnist : MNIST에 대한 simple CNN 구현
 - catsvsdogs : 사전훈련된 resnet18, resnet34을 활용한 고양이-개 훈련
-- imagenet : ImageNet 데이터셋에 대한 모델 구현
-  - VGG19 직접구현
+- vgg : vgg 모델 직접 구현과 실행
