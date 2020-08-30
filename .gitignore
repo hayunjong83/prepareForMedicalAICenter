@@ -1,4 +1,4 @@
 # Directories
 PyTorch/mnist/data/
 PyTorch/catsvsdogs/data
-PyTorch/imagenet/data
+PyTorch/vgg/data
