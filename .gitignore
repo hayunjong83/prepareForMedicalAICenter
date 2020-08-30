@@ -2,3 +2,6 @@
 PyTorch/mnist/data/
 PyTorch/catsvsdogs/data
 PyTorch/vgg/data
+
+# Files
+mongodb/admin_info.txt
