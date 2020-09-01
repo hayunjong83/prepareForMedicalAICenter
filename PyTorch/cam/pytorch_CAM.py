@@ -1,6 +1,7 @@
 import io
 import requests
 from PIL import Image
+import torch
 from torchvision import models, transforms
 from torch.autograd import Variable
 from torch.nn import functional as F
@@ -31,9 +32,9 @@ net.eval()
 # hook the feature extractor
 features_blobs = []
 def hook_feature(module, input, output):
-    features_blob.append(output.data.to(device).numpy())
+    features_blobs.append(output.data.cpu().numpy())
 
-net._moduels.get(finalconv_name).register_forward_hook(hook_feature)
+net._modules.get(finalconv_name).register_forward_hook(hook_feature)
 
 # get the softmax weight
 params = list(net.parameters())
@@ -63,8 +64,8 @@ preprocess = transforms.Compose([
     normalize
 ])
 
-response = request.get(IMG_URL)
-img_pil = Image.open(io.ByteIO(response.content))
+response = requests.get(IMG_URL)
+img_pil = Image.open(io.BytesIO(response.content))
 img_pil.save('test.jpg')
 
 img_tensor = preprocess(img_pil)
@@ -72,7 +73,7 @@ img_variable = Variable(img_tensor.unsqueeze(0))
 logit = net(img_variable)
 
 # download the image category list
-classes = {int(key):value for (key, value) in request:get(LABELS_URL).json().items()}
+classes = {int(key):value for (key, value) in requests.get(LABELS_URL).json().items()}
 
 h_x = F.softmax(logit, dim =1).data.squeeze()
 probs, idx = h_x.sort(0, True)
