@@ -5,3 +5,23 @@ PyTorch/vgg/data
 
 # Files
 mongodb/admin_info.txt
+
+# For Express app
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+lib-cov
+coverage
+.grunt
+.lock-wscript
+build/Release
+node_modules
+npm-debug.log
+.DS_Store
+.env
