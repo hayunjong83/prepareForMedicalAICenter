@@ -218,3 +218,52 @@ mongoose 모듈의 Schema 생성자를 사용해 스키마를 만든다.(*new mo
 스키마 정의가 끝난 후에 몽구스의 <mark>*model 메소드*</mark>로 스키마와 몽고디비의 컬렉션을 연결하는 모델을 만든다. 첫 번째 인자로 입력한 컬렉션 이름은 **소문자 + 복수형** 이름으로 바뀐다. 강제로 컬렉션이름을 지정하려면 세 번째 인자로 컬렉션 이름을 지정한다.
 
 comments.js에서 ref 속성으로 User가 주어졌으므로, commenter 필드에 User 스키마의 사용장 ObjectId가 들어간다. 
+
+
+
+### mongoose.js 참고사항
+
+*document.querySelectorAll()*는 특정 CSS 선택자를 가진 모든 요소를 배열로 가져오는 메소드다. 이 때 생성되는 것은 엄밀하게 유사배열이므로, 배열의 메소드인 forEach를 사용하기 위해 *[].forEach.call( els, function(el){});* 과 같은 방식을 사용한다.
+
+*addEventListener*는 이벤트를 등록하는 가장 권장되는 방식이다. *click* 이벤트 발생시 *textContent* 프로퍼티를 사용한다. 불필요한 공백을 제거하는 *innerText*에 비해 *textContent*는 텍스트를 그대로 가져온다.
+
+*XMLHttpRequest(XHR)* 객체는 서버와 상호작용하기 위해 사용되는데, 전체 페이지를 새로고침하지 않아도 url로부터 데이터를 받아올 수 있다. *responseText*는 요청에 대한 응답을 텍스트로 갖는 DOMString을 반환하는 메소드다. 반환된 문자열을 분석하여 객체로 반환하는 *JSON.parse*를 사용한다.
+
+*map* 메소드는 반복문을 수행하면서 배열 안의 요소들 각각에 변환을 수행하게 해준다. *document.createElement*를 이용하면 문자열에 해당하는 요소를 생성해준다.  생성된 요소는 *.appendChild()*를 통해 선택한 요소의 자식요소로서 추가될 수 있다.
+
+*XMLHttpRequest.open(method, url[, async])*는 서버로의 요청을 준비하고, *XMLHttpRequest.send*는 준비된 요청을 서버에 전달한다. *open*에서 HTTP 메소드로 *'GET'*메소드를 사용한 경우, url의 일부인 *query_string*으로 데이터를 서버로 전송하고, *'POST'*를 사용하면 *Reqeust Body*에 담아 데이터를 전송한다.  요청을 처리할 페이지 url 다음에, 이 요청을 비동기로 처리할 지 여부를 bool 값으로 정의할 수도 있다. *XMLHttpRequest.onload* 메소드는 브라우저가 서버로부터 응답을 받을 때, 발생하는 이벤트를 다룬다.
+
+*prompt()*함수는 문자열을 입력할 때 사용한다. 첫 번째 매개변수는 입력 창에 띄워줄 메시지를 의미하고, 두 번째 매개변수를 지정하면 입력부분의 기본 문자열을 지정할 수 있다.
+
+*PATCH*는 자원 일부만 수정하는 http 메소드 중 하나다. JSON 타입의 데이터를 보내기 위해서 HTTP요청 헤더의 값을 설정하는 *XMLHttpRequest.setRequestHeader()*메소드는 반드시 open() 뒤에, 또 send()가 호출되기 전에 호출해야한다. *application/json* 또는 *application/x-json*으로 Content-Type을 설정하면 json 데이터를 보낼 수 있다. 이 때 보내는 json 데이터를 만들기 위해 *JSON.stringify()*를 사용한다. *JSON.stringify()*메소드는 자바스크립트 값이나 객체를 JSON 문자열로 변환한다.
+
+사용자 등록을 위해 id속성이 user-form인 요소를 *.getElementById()*로 찾아낸다. 반환된 Element 객체에 submit 이벤트가 발생했을 때, 처리할 함수를 이벤트리스너로 등록한다. *event.preventDefault()*를 써서 현재 이벤트의 기본 동작을 중단한 뒤에 필수 값의 존재 여부를 확인하고 그 값을 저장한다. *event.target*속성은 이벤트가 시작한 DOM요소를 가리킨다.
+
+
+
+### index.js 참고사항
+
+User.find({})로 찾은 모든 사용자를 mongoose.pug를 렌더링할 때 users 변수로 넣어준다. 몽구스도 기본적으로 프로미스를 지원한다. 따라서 then과 catch를 사용해서 조회 성공과 실패 시의 정보를 얻을 수 있다. *aysnc / await*을 활용한 표현은 아래와 같다.  
+
+```javascript
+router.get('/', async(req, res, next) => {
+    try{
+        const user = await User.find();
+        res.render('mongoose', {users});
+    }catch (error){
+        console.log(error);
+        next(error);
+    }
+})
+```
+
+
+
+### users.js 참고사항
+
+GET /users와 POST /users 주소로 요청이 들어올 때의 라우터다. GET은 사용자를 조회하는 요청이고, POST는 사용자를 등록하는 요청을 처리한다. 정의된 스키마에 부합되지 않는 데이터를 등록하려고 하면 몽구스가 에러를 발생시킨다.
+
+
+
+### comments.js 참고사항
+
