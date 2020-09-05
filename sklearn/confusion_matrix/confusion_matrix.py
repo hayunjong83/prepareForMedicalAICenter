@@ -23,6 +23,7 @@ np.set_printoptions(precision=2)
 # Plot non-normalized confusion matrix
 title_options = [("Confusion matrix, without normalization", None),
 			  ("Normalizaed confusion matrix", 'true')]
+count = 0
 for title, normalize in title_options:
     disp = plot_confusion_matrix(classifier, X_test, y_test,display_labels=class_names,
 			cmap=plt.cm.Blues, normalize = normalize)
@@ -30,4 +31,5 @@ for title, normalize in title_options:
     print(title)
     print(disp.confusion_matrix)
     plt.show()
-    plt.savefig("confusion_matrix"+title+".png")
+    plt.savefig("confusion_matrix"+str(count)+".png")
+    count += 1
