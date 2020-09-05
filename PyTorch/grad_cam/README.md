@@ -40,3 +40,17 @@ L_{Grad-CAM}^{c} = ReLU(\sum_k \alpha_{k}^{c} A^{k})
 $$
 이 결과는 마지막 컨볼루션 특성맵의 크기와 같은 대략적인 히트맵이다. VGG나 AlexNet 에서는 마지막 컨볼루션 층의 크기인 14 x 14이 된다. CAM이 적용가능한 아키텍쳐에서는 w가 정확히 $\alpha$다 ReLU를 적용하는 점을 제외하면 이점이 Grad-CAM을 CAM의 일반화로 만든다. ReLU를 쓰는 이유는 관심있는 클래스에 양성(positive) 영향을 끼치는 특성에만 신경쓰고 싶기 때문이다. 즉 y^c를 높이기 위해 강도(intensity)가 커져야만 하는 픽셀 등에 주목하기 위해서이다.
 
+
+
+## 구현참고
+
+[pytorch-grad-cam](https://github.com/jacobgil/pytorch-grad-cam)
+
+### 사용법
+
+```sh
+$ python grad_cam.py <이미지 경로>
+```
+
+
+
