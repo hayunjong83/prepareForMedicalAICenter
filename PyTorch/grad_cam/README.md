@@ -54,3 +54,6 @@ $ python grad_cam.py <이미지 경로>
 
 
 
+### 구현 코드에서 사용된 메소드 참조
+
+*register_hook* 은 *backward hook*으로 사용할 함수를 등록할 수 있게 해준다. 즉, 그래디언트가 계산될 때마다 실행될 함수를 지정하는 것이다. 여기서는 *save_gradient* 함수가 실행되도록 하여, gradients 리스트에 저장한다.
