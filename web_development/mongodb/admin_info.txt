@@ -1,0 +1,4 @@
+mongodb 테스트용 계정
+user: hayunjong83
+pwd: mongodb1234
+roles: root
